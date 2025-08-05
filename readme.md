@@ -2,3 +2,4 @@
 
 - [Cite as]https://doi.org/10.48550/arXiv.2412.02334
 - [arxiv]https://arxiv.org/abs/2412.02334
+- [journal]https://advanced.onlinelibrary.wiley.com/doi/10.1002/qute.202500206
