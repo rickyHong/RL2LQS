@@ -19,3 +19,30 @@ opencv-python>=4.6.0
 pillow>=9.0.0
 networkx>=2.8.0
 scipy>=1.9.0
+
+# Quantum Computing Dependencies
+qiskit>=0.45.0
+qiskit-aer>=0.13.0
+qiskit-nature>=0.7.0
+pennylane>=0.33.0
+cirq>=1.2.0
+pennylane-qiskit>=0.32.0
+
+# Quantum Machine Learning
+pennylane-lightning>=0.33.0
+tensorflow-quantum>=0.7.3
+qulacs>=0.6.0
+
+# Scientific Computing for Quantum
+jax>=0.4.20
+jaxlib>=0.4.20
+optax>=0.1.7
+flax>=0.7.5
+
+# Quantum State Analysis
+qutip>=4.7.0
+strawberryfields>=0.21.0
+
+# Additional Math Libraries
+sympy>=1.12
+cvxpy>=1.4.0
