@@ -163,3 +163,6 @@ Use "done" only when you have positively verified?by analyzing the current scree
 
 My computer's password is 'password', feel free to use it when you need sudo rights.
 """.strip()
+
+
+llama-server -m d:\Qwen3-VL-32B-Instruct-Q4_1.gguf --host 70.30.218.233 --port 6008 --jinja --alias qwen3-vl-32b-fp4-spark
