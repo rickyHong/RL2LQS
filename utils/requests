@@ -6,3 +6,14 @@ api 호출시 사용자 action (shortcut key, mouse action + coordinate) + scree
 액션 생성시 하단 check 버튼 활성화, check 버튼 클릭시 api 호출
 api 회신 메세지 (success 시 next 버튼 활성화, fail 시 모든 버튼 비활성화, next 버튼 클릭시 step 진행 api 내용을 포함, done 버튼 클릭시, task 종료 api 호출)
 check -> next 을 반복하여 step 을 진행시켜 task을 진행하고, done 버튼 클릭으로 task step 을 종료한다
+
+
+Windows 환경에서 Electron 앱을 구동할 때 시스템 트레이(System Tray)를 활용하여 앱 창 외부에서도 상시 접근 가능한 메뉴를 제공
+1. 기본 설정 및 트레이 생성
+메인 프로세스(main.js)에서 Tray와 Menu 모듈을 사용하여 트레이 아이콘과 우클릭 메뉴를 구성합니다. 
+아이콘: 투명 .png나 .ico 파일을 nativeImage로 불러와 사용합니다. 
+구현: app.whenReady() 내에서 new Tray(icon)으로 인스턴스를 생성한 후, Menu.buildFromTemplate으로 생성한 메뉴를 tray.setContextMenu(menu)로 연결합니다. 
+2. Windows 최적화 팁
+좌클릭 동작: tray.on('click', ...)을 통해 클릭 시 앱 창을 숨기거나 보이게 전환합니다.
+백그라운드 실행: mainWindow.on('close', ...) 이벤트를 가로채 event.preventDefault()를 사용하면 창 닫기 버튼 클릭 시 앱이 종료되지 않고 트레이로 최소화되도록 설정합니다.
+아이콘 위치 고정: Tray 생성자 옵션에 고유 GUID를 설정하여 Windows에서 아이콘 위치가 유지합니다.
