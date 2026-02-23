@@ -1,0 +1,8 @@
+사용자의 액션과 현재 화면 정보를 API 수행
+클라이언트 프로그램의 대화창 구성은 상단 스크린샷, api 메세지 호출, 회신 메세지, 하단 버튼 (check, next, done) 이 위치한다. 
+api 호출시 사용자 action (shortcut key, mouse action + coordinate) + screen shot 를 실행전에 api 호출
+사용자 action (shortcut key, mouse action + coordinate) 은 마우스 우클릭시 해당 좌표에서 메뉴생성 그 하위메뉴에 해당 메뉴 액션이 생성 
+실제로 호출되지 않는 action은 screen shot 이미지와 action 정보를 api 호출
+액션 생성시 하단 check 버튼 활성화, check 버튼 클릭시 api 호출
+api 회신 메세지 (success 시 next 버튼 활성화, fail 시 모든 버튼 비활성화, next 버튼 클릭시 step 진행 api 내용을 포함, done 버튼 클릭시, task 종료 api 호출)
+check -> next 을 반복하여 step 을 진행시켜 task을 진행하고, done 버튼 클릭으로 task step 을 종료한다
