@@ -17,3 +17,22 @@ Windows 환경에서 Electron 앱을 구동할 때 시스템 트레이(System Tr
 좌클릭 동작: tray.on('click', ...)을 통해 클릭 시 앱 창을 숨기거나 보이게 전환합니다.
 백그라운드 실행: mainWindow.on('close', ...) 이벤트를 가로채 event.preventDefault()를 사용하면 창 닫기 버튼 클릭 시 앱이 종료되지 않고 트레이로 최소화되도록 설정합니다.
 아이콘 위치 고정: Tray 생성자 옵션에 고유 GUID를 설정하여 Windows에서 아이콘 위치가 유지합니다.
+
+
+
+아래 내용을 코드에 반영한다.
+Electron에서는 transparent: true 옵션을 통해 앱의 배경을 투명하게 설정하고, 뒷면에 실행 중인 다른 프로그램이나 바탕화면이 보이게 만들어야 한다.
+1. 기본 구현 방법 (Main Process)
+BrowserWindow를 생성할 때 다음 옵션들을 조합해야 합니다. 
+transparent: true: 창의 배경을 투명하게 만듭니다.
+frame: false: OS 기본 타이틀 바와 테두리를 제거합니다.
+alwaysOnTop: true: 앱이 항상 다른 창들 위에 떠 있게 하여 투명 효과를 극대화합니다.
+
+2. 스타일 시트 설정 (CSS)
+Electron의 창 설정만으로는 부족합니다. 웹 콘텐츠의 배경색도 투명하게 지정해야 합니다.
+
+3. 마우스 클릭 관통 (Click-Through)
+투명한 영역 뒤에 있는 다른 프로그램을 직접 클릭하기 위해 win.setIgnoreMouseEvents(true) 기능을 사용해야 합니다.
+전체 관통: 앱의 모든 영역에서 마우스 클릭이 뒤로 전달됩니다
+
+4. 우클릭 액션 메뉴 및 하위 메뉴는 EltectronAPP 메뉴가 동작해야 한다.
