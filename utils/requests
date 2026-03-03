@@ -64,3 +64,39 @@ robotjs.keyTap('v', 'control')을 실행해서 붙여넣게 해줘
 
 우클릭 좌표 기준으로 굵은 녹색 이중 원형(Double Circle Ripple) 수축 애니메이션 표시 후 자동 제거에서
 우클릭 좌표 기준으로 마우스 액션메뉴 서브 액션 'Left Click, Double Click' 시 굵은 녹색 이중 원형(Double Circle Ripple) 수축 애니메이션 표시 후 자동 제거로 변경해
+
+=====
+대화창 레이아웃내 API Base 를 수정가능하도록 하고 수정된 API Base 는 Client 프로그램의 설정파일로 관리하여
+수정 후 내용이 유지 될수 있도록한다.
+
+아래 API 호출 및 회신 규칙에 따라 기존 'POST /api/action' 은 아래 두개의 API을 이용하도록 수정한다.
+"/v1/gua/live_trajectory" 는 실행 API
+"/v1/gua/live_messages" 는 회신 대기 API
+
+API 호출 메세지는 서버 API 코드 
+@app.post("/v1/gua/live_trajectory", response_model=GuaLiveTrajectoryResponse) 이고
+호출 예시는 :  http://0.0.0.0:8888/v1/gua/live_trajectory?stream_mode=false&screen_resolution=1400&target=e00140ad-3ee8-4f99-a518-0eb60e5652b0&work_model=demo&workflow=simple_e2e&action_type=left_click&coordinate_x=417&coordinate_y=203&content=None&key=None 
+동시에 Body 에는 {
+  "intent_screenshot": "iVBORw0KGgoAAAANSUhEUgAABXgAA..........."} 을 호출한다.
+
+API 회신 메세지는 서버 API 코드
+@app.get("/v1/gua/live_messages")
+def live_messages():
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
+회신 메세지 예시는 :  
+data: {"task_status": "ANALYSIS", "grounder_action_type": "click", "grounder_validation": "feasible", "grounder_summary": "Click the button with the trash can icon in the toolbar above the file list.", "grounder_predict_x": 416, "grounder_predict_y": 205} 
+data: {"task_status": "ANALYSIS", "grounder_action_type": "type", "grounder_validation": "feasible", "grounder_summary": "type messages", "type_message": "messages", "grounder_predict_x": 416, "grounder_predict_y": 205} 
+data: {"task_status": "ANALYSIS", "grounder_action_type": "keypress", "grounder_validation": "feasible", "grounder_summary": "keypress", "keypress_message": "ctrl+c", "grounder_predict_x": 416, "grounder_predict_y": 205} 
+
+
+회신된 메세지는 대화창 레이아웃 위에 팝업창을 만들고
+팝업창 첫줄에 grounder_summary 내용을 팝업창에 Intent summary 로 표시하고
+하단에 "Action 실행", "Action 취소" 버튼을 만든다.
+
+회신된 "grounder_predict_x":,  "grounder_predict_y": 좌표를 기준으로 굵은 레드 이중 원형(Double Circle Ripple) 수축 애니메이션 후 유지하며 대기하고
+
+팝업창 하단 "Action 실행" 버튼 선택시, 수축 애니메이션 제거 후,  OS 마우스/키보드 제어를 수정하여 
+"grounder_action_type": "click"/"type"/"keypress" 에 따라 응답 명령을 robotjs 로 실행한다.
+
+"Action 취소" 버튼 선택시, 수축 애니메이션 제거 후 대기한다.
+====
