@@ -5,3 +5,15 @@ Instant Recovery: Immediately switch back to win.setIgnoreMouseEvents(false) aft
 Timing Buffer: Wrap the recovery logic in a short setTimeout (around 20ms) to ensure the OS has enough time to register the click behind the window.
 UX Polish: Save the current mouse position before moving to the target coordinates, and restore the cursor to its original position after the click is done.
 Robustness: Ensure the code handles errors gracefully so the window doesn't get stuck in 'ignore mouse' mode if the RobotJS action fails."
+
+
+"Electron으로 전체화면 투명 오버레이 앱을 만들고 있어서 robojs 실행 시 앱 뒤로 액션이 전달되지 않고 있어
+SSE 메시지 수신 시 팝업 화면에서 "Action 실행" 선택하여 robojs 실행 시 
+그 찰나에만 앱이 투명해지면서(Click-through) 앱 뒤에 있는 배경이나 다른 윈도우에 RobotJS로 마우스 클릭을 전달하고 싶어.
+또한 SSE 팝업의 "Action 실행" 클릭 후 robotjs 실행이 완료되면 레드 ripple 제거 후 팝업을 닫도록 수정해
+
+핵심 요구사항:
+1. robot.mouseClick()이 호출되는 순간에만 win.setIgnoreMouseEvents(true)가 되어야 해.
+2. 클릭이 끝나면 즉시 다시 마우스 이벤트를 앱이 가로챌 수 있게(false) 복구해줘.
+3. OS가 클릭 이벤트를 놓치지 않도록 setTimeout을 활용해서 미세한 타이밍 조절(약 20ms)을 포함해줘.
+4. 클릭 전 현재 마우스 위치를 저장했다가 클릭 후 다시 원래 위치로 되돌리는 센스를 발휘해줘."
