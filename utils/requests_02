@@ -19,3 +19,11 @@ SSE 메시지 수신 시 팝업 화면에서 "Action 실행" 선택하여 robojs
 4. 클릭 전 현재 마우스 위치를 저장했다가 클릭 후 다시 원래 위치로 되돌리는 센스를 발휘해줘."
 
 robotjs is not available in this runtime. Install/build robotjs on the target OS first.
+
+Windows automation fallback failed: #< CLIXML\r\n<Objs Version=\"1.1.0.1\" 에러 발생됨
+
+"message": "Windows automation fallback failed: #< CLIXML\r\n<Objs Version=\"1.1.0.1\" xmlns=\"http://schemas.microsoft.com/powershell/2004/04\"><Obj S=\"progress\" RefId=\"0\"><TN RefId=\"0\"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N=\"SourceId\">1</I64><PR N=\"Record\"><AV>ó�� ����ϱ� ���� ����� �غ��ϴ� ���Դϴ�.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>"
+에러 메시지에 깨진 한글(ó ϱ...)이 보이는 것은 인코딩 불일치 때문입니다. Electron과 PowerShell 간의 통신 규격을 UTF-8로 통일해야 파싱 오류가 사라질것으로 생각됨.
+에러 수정해
+
+
