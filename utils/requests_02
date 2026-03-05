@@ -1,0 +1,7 @@
+"I'm building a transparent, full-screen Electron overlay app. I need to implement a feature where the app performs a mouse click on the background (the desktop or other apps behind it) using RobotJS, but ONLY at the exact moment of the action.
+Please write the IPC handler in the Main process with these requirements:
+Dynamic Click-through: Use win.setIgnoreMouseEvents(true) just before the RobotJS action so the click passes through my transparent window.
+Instant Recovery: Immediately switch back to win.setIgnoreMouseEvents(false) after the action so the app becomes interactive again.
+Timing Buffer: Wrap the recovery logic in a short setTimeout (around 20ms) to ensure the OS has enough time to register the click behind the window.
+UX Polish: Save the current mouse position before moving to the target coordinates, and restore the cursor to its original position after the click is done.
+Robustness: Ensure the code handles errors gracefully so the window doesn't get stuck in 'ignore mouse' mode if the RobotJS action fails."
