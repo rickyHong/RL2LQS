@@ -17,3 +17,5 @@ SSE 메시지 수신 시 팝업 화면에서 "Action 실행" 선택하여 robojs
 2. 클릭이 끝나면 즉시 다시 마우스 이벤트를 앱이 가로챌 수 있게(false) 복구해줘.
 3. OS가 클릭 이벤트를 놓치지 않도록 setTimeout을 활용해서 미세한 타이밍 조절(약 20ms)을 포함해줘.
 4. 클릭 전 현재 마우스 위치를 저장했다가 클릭 후 다시 원래 위치로 되돌리는 센스를 발휘해줘."
+
+robotjs is not available in this runtime. Install/build robotjs on the target OS first.
