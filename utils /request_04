@@ -1,0 +1,36 @@
+
+서브메뉴가 열린 상태에서 Electron APP 동작을 위한 마우스 이벤트 발생시 서브메뉴가 닫히는 현상을 방지하기 위해 아래 내용 코드 반영
+
+문제는 Windows OS의 기본 동작인 '포커스 전환 시 팝업 닫힘' 특성 때문에 발생합니다. 서브메뉴(또는 모든 컨텍스트 메뉴)는 자신이 속한 부모 윈도우가 포커스를 잃거나, 다른 윈도우가 활성화되는 순간 자동으로 닫히도록 설계되어 있습니다.
+Electron 앱에서 이벤트를 발생시킬 때 서브메뉴를 유지하려면 '포커스를 뺏지 않는 제어'가 핵심입니다.
+1. setIgnoreMouseEvents(true, { forward: true }) 활용
+가장 중요한 설정입니다. 단순히 true만 줄 경우 Electron 창이 마우스 이벤트를 완전히 무시하지만, { forward: true } 옵션을 사용하면 이벤트를 아래의 배경 윈도우로 전달합니다.
+이 방식을 사용하면 Electron 창이 "활성화(Focus)"되지 않은 상태에서도 이벤트를 통과시키므로, 배경 윈도우의 서브메뉴가 포커스 해제로 인해 닫히는 것을 방지할 수 있습니다.
+2. BrowserWindow 생성 옵션 최적화
+Electron 창이 마우스를 클릭할 때 포커스를 가져오지 않도록 설정해야 합니다.
+javascript
+const win = new BrowserWindow({
+  // ... 기본 설정
+  focusable: false,      // 창이 포커스를 받지 않도록 설정
+  alwaysOnTop: true,
+  skipTaskbar: true,     // 작업표시줄에 표시되지 않게 하여 포커스 간섭 최소화
+});
+
+// Windows 전용: 포커스를 뺏지 않고 최상단 유지
+win.setAlwaysOnTop(true, 'screen-saver');
+코드를 사용할 때는 주의가 필요합니다.
+
+focusable: false를 설정하면 마우스 클릭 시 Electron 창이 활성화되지 않으므로, 원래 떠 있던 배경 윈도우의 메뉴가 닫히지 않고 유지됩니다.
+3. PowerShell 클릭 전송 방식 변경 (중요)
+PowerShell에서 어떤 명령어를 사용하느냐에 따라 결과가 달라집니다.
+사용 금지: Activate() 또는 윈도우를 직접 클릭하여 포커스를 바꾸는 방식.
+권장: SendMessage 또는 PostMessage API를 사용한 비활성 클릭(Background Click).
+이 방식은 윈도우를 활성화(Focus)시키지 않고 특정 좌표에 '마우스 클릭 이벤트' 신호만 직접 꽂아 넣습니다. 윈도우 매니저 입장에서는 포커스 변화가 없으므로 서브메뉴가 유지됩니다.
+4. mousedown 이벤트 가로채기 방지
+Electron 앱 내의 특정 UI 요소를 클릭해야 하는 상황이라면, 해당 클릭이 document 수준에서 포커스를 요청하지 않도록 e.preventDefault()를 사용하거나 CSS의 pointer-events: none을 적절히 섞어주어야 합니다.
+5. 멀티 모니터 환경에서의 팁
+주 모니터에서만 이 동작을 제한하려면, 클릭 전송 전 현재 마우스 좌표가 screen.getPrimaryDisplay().bounds 내에 있는지 확인하는 로직을 PowerShell 스크립트 시작 부분에 넣으십시오.
+요약하자면:
+Electron 창을 focusable: false로 설정하십시오.
+관통 시 setIgnoreMouseEvents(true, { forward: true })를 사용하십시오.
+PowerShell에서는 윈도우를 활성화하지 않는 PostMessage 방식으로 이벤트를 보내십시오.
