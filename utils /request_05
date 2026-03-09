@@ -12,4 +12,5 @@ electron app 의 powershell 호출로 마우스 클릭 실행 시 "chrome 브라
 실행 가능하도록 코드 수정
 
 
-UI Automation(UIA)을 사용하여 해당 좌표에 있는 '요소(Element)'를 먼저 추출한 뒤, 그 요소에 Invoke 명령을 내리는 방식을 사용해야 합니다.
+메모장과 같이 UWP(Universal Windows Platform) 또는 WinUI 3 프레임워크를 기반으로 제작되어 PostMessage 방식의 비활성 클릭이 까다로운 윈도우 기본 프로그램의 제어를 위해
+UI Automation(UIA)을 사용하여 해당 좌표에 있는 '요소(Element)'를 먼저 추출한 뒤, 그 요소에 Invoke 명령을 내리는 방식으로 코드 수정
