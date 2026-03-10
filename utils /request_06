@@ -1,0 +1,8 @@
+'Type Action' 실행이후 SSE 회신 으로
+"grounder_action_type":"type" 일때 action: "type": 텍스트 타이핑 실행시
+ 타이핑 액션이 실행되지 않는 현상이 발생되며,
+이후 비정상적인 action_type=shortcut_ctrl_v 의 액션 API 실행 현상이 나타나고 있음
+WScript.Shell SendKeys 방식으로 action: "type" 텍스트 입력 처리 , action: "keypress" 단축키 입력 처리하고,
+또한 기존 오버레이창과 비관통 절차들을 고려하여 입력 가능한 상황 설정 후 텍스트 입력과, 단축키 입력을 수행하도록 변경하고,
+투명 오버레이창 가장자리면을 옅은 파란색 투명 그라데이션 효과를 아름답게 넣어 작업 가능한 영역을 표현하도록 
+코드 수정해
