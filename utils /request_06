@@ -63,7 +63,7 @@ WScript.Shell SendKeys 방식으로 action: "type" 텍스트 입력 처리 , act
 
 
 
-4. 'Task Management' 의 서브 메뉴에 'Edit & Run' 메뉴를 'Done' 아래 추가하고,
+4. ''Task Management' 의 서브 메뉴에 'Edit & Run' 메뉴를 'Done' 아래 추가하고,
     "Edit & Run" 메뉴를 선택하여 클릭하면  "Task Edit & Run" 팝업 생성하고, (
     첫째줄 "Task List" 에 Task 파일들을 읽어서 "title" 을 기준으로 Dropdown list 로 조회하고 선택할수 있도록 구성한다. 오른쪽에 'Delete' 버튼을 위치하고 클릭하면 해당 json 파일을 삭제하고 새롭게 Task List 을 읽어온다.
     둘째줄 "Instruction" 에 json 내 'Instruction' 내용을 표시한다. (2줄 공간을 확보)
@@ -71,6 +71,9 @@ WScript.Shell SendKeys 방식으로 action: "type" 텍스트 입력 처리 , act
     넷째줄, 셋째줄의 step 원형 번호를 클릭하면 json 내 steps 의 step 번호에 해당하는 내용을 표시한다. (3줄이상의 공간을 확보한다)
     다섯째줄, 'Edit', 'Run' 버튼으로 구성하고,
          - 'Edit' 버튼을 선택하여 클릭시 (넷째줄의 step 내용을 편집가능한 모드로 변경하고, 넷째줄 오른쪽 끝에 'Save' 버튼을 활성화 시키고 버튼을 클릭하면 내용을 저장하고 편집 불가모드인 읽기모드로 화면 구성을 변경한다.)
-         - 'Run' 버튼을 선택하여 클릭시 (Task List 에서 선택된 Task 의 Json 내용을 읽어서), (실행 API 을 호출한다 "action_type=demo_run, content=instruction, coordinate_x=0, coordinate_y=0" 을 추가하고 다른 값들은 기존 값을 추가하고, 스크린 샷을 새로 찍어서 담아서 호출한다.)
+         - 'Run' 버튼을 선택하여 클릭시 (Task List 에서 선택된 Task 의 Json 내용을 읽어서), (실행 API 을 호출한다 "action_type=demo_run, content=에는 "steps" 내 리스트의 데이터를 한개씩 담아서 n 번 실행한다(n 번 실행 API를 호출), key=instruction, coordinate_x=0, coordinate_y=0" 을 추가하고 다른 값들은 기존 값을 추가하고, 스크린 샷을 새로 찍어서 담아서 호출한다.)
+            * 'Run' 수행은 위에서 언급한바와 같이 "steps" 내 리스트의 데이터 숫자만큼 n 번 실행 API 를 호출한다. 
     
     * 팝업창의 디자인은 다른 대화창과 동일한 레이아웃 최적화와 MACOS 대화창 디자인으로 아름답게 구성하여 코드 수정해
+
+
