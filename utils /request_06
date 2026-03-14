@@ -77,3 +77,18 @@ WScript.Shell SendKeys 방식으로 action: "type" 텍스트 입력 처리 , act
     * 팝업창의 디자인은 다른 대화창과 동일한 레이아웃 최적화와 MACOS 대화창 디자인으로 아름답게 구성하여 코드 수정해
 
 
+5. 기존 OS 마우스/키보드 제어 API 실행을 위한 도구 (robot.js 와 PowerShell) 기반을 제거하고, nut.js 를 사용하도록 변경한다.
+     1. package.json 내 dependencie 영역에  "@nut-tree-fork/nut-js": "^4.2.6"  을 그대로 입력하여 수정하고
+     2. build 시 npm install @nut-tree-fork/nut-js 을 사용하도록 변경
+     3. dist 빌드시 아래 windows 용 nut-js 빌드를 ubuntu에서 실행하기 위해 docker 기반 명령어로 변경
+   docker run --rm -ti \
+  -v ${PWD}:/project \
+  -v ${PWD}/node_modules:/project/node_modules \
+  -v ~/.cache/electron:/root/.cache/electron \
+  -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+  -w /project \
+  electronuserland/builder:wine \
+  /bin/bash -c "npm run build:win"
+
+    4. 기존 모든 기존 OS 마우스/키보드 제어 API 실행을 위한 코드를 찾아 nut-js 로 실행 되도록 코드를 수정 반영한다.
+    5. 변경 된 내용을 README.md 파일에 업데이트 한다.
